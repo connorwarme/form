@@ -3,19 +3,67 @@ console.log("working?");
 //
 const form = document.querySelector("form");
 // email
-const emailInput = form.children[1];
+const emailInput = form.children[0].children[1];
+const emailError = emailInput.nextElementSibling;
+console.log(emailError);
+const showEmailError = () => {
+    if (emailInput.validity.valueMissing) {
+        emailError.textContent = "You need to enter an email address.";
+    } else if (emailInput.validity.typeMismatch) {
+        emailError.textContent = "Input needs to be a valid email address.";
+    } else if (emailInput.validity.tooShort) {
+        emailError.textContent = `Email must be at least ${emailInput.minLength} characters; you entered ${emailInput.value.length}.`;
+    }
+    emailError.className = "error active";
+};
 emailInput.addEventListener("input", () => {
-    if (emailInput.validity.typeMismatch) {
-        emailInput.setCustomValidity("Please enter a valid email address.");
-        emailInput.reportValidity();
+    if (emailInput.validity.valid) {
+        emailError.textContent = "";
+        emailError.className = "error";
     } else {
-        emailInput.setCustomValidity("");
+        showEmailError();
     }
 });
 // country
-const countryInput = form.children[3];
+const countryInput = form.children[1].children[1];
+const countryError = countryInput.nextElementSibling;
+const showCountryError = () => {
+    if (countryInput.validity.valueMissing) {
+        countryError.textContent = "You need to enter your country.";
+    } else if (countryInput.validity.tooShort) {
+        countryError.textContent = `Country must be at least ${countryInput.minLength} characters; you entered ${countryInput.value.length}.`;
+    }
+    countryError.className = "error active";
+};
+countryInput.addEventListener("input", () => {
+    if (countryInput.validity.valid) {
+        countryError.textContent = "";
+        countryError.className = "error";
+    } else {
+        showCountryError();
+    }
+});
 // zip code
 const zipInput = form.children[5];
 // pw
 const pwInput = form.children[7];
 const pwconfInput = form.children[9];
+//
+form.addEventListener("submit", (e) => {
+    let count = 0;
+    if (!emailInput.validity.valid) {
+        showEmailError();
+        count += 1;
+    }
+    if (!countryInput.validity.valid) {
+        showCountryError();
+        count += 1;
+    }
+    if (count > 0) {
+        // i.e. if any of the inputs weren't valid, prevent submit
+        e.preventDefault();
+        // reset count value for next time
+        count = 0;
+    }
+
+});

@@ -7,25 +7,51 @@
     height: inherit;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 1fr 2fr 1fr;
 }
 form {
-    grid-area: 2 / 2 / 3 / 3;
+    grid-column: 2/3;
     width: 20vw;
     justify-self: center;
     display: grid;
     flex-direction: column;
     justify-content: center;
+    margin-top: 5vh;
 }
 form > label {
     justify-self: center;
     margin: 4px 0 -4px 0;
+    display: grid;
 }
-form > input {
-    margin: 5px;
+form > label > input {
+    width: 20vw;
+    margin: 5px 0 0 0;
     border: 1px solid black;
     border-radius: 5px;
     padding: 5px 10px;
+}
+input:invalid {
+    border-color: rgb(245, 19, 19);
+}
+input:focus:invalid {
+    outline: none;
+}
+.error {
+    display: block;
+    width: max-content;
+    height: 26px;
+    padding: 0;
+    margin-bottom: 4px;
+}
+.error.active {
+    padding: 5px 10px;
+    font-size: 80%;
+    color: black;
+    background-color: white;
+    border: 1px solid rgb(245, 19, 19);
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    box-sizing: border-box;
+    justify-self: center;
 }
 form > button {
     justify-self: center;
