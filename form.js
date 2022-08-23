@@ -44,7 +44,26 @@ countryInput.addEventListener("input", () => {
     }
 });
 // zip code
-const zipInput = form.children[5];
+const zipInput = form.children[2].children[1];
+const zipError = zipInput.nextElementSibling;
+const zipRegex = /^\d{5}(-\d{4})?$/;
+const showZipError = () => {
+    console.log(zipRegex.test(zipInput.value));
+    if (zipInput.validity.valueMissing) {
+        zipError.textContent = "You need to enter your zipcode.";
+    } else if (zipInput.validity.patternMismatch) {
+        zipError.textContent = "Format as standard 5 digit US ZIP code or US ZIP + 4.";
+    }
+    zipError.className = "error active";
+};
+zipInput.addEventListener("input", () => {
+    if (zipInput.validity.valid) {
+        zipError.textContent = "";
+        zipError.className = "error";
+    } else {
+        showZipError();
+    }
+});
 // pw
 const pwInput = form.children[7];
 const pwconfInput = form.children[9];
