@@ -1,6 +1,6 @@
 # form  
   
-practice form validation  
+Practice form validation  
 - utilize constraint validation API  
 - simple (email, country, zip code, password, password confirmation)  
-- making sure all validation happens via JS (for sake of the exercise)
+- make sure all validation happens via JS (for sake of the exercise)  

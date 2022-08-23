@@ -2,3 +2,44 @@
     padding: 0;
     margin: 0;
 }
+.main {
+    width: inherit;
+    height: inherit;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+}
+form {
+    grid-area: 2 / 2 / 3 / 3;
+    width: 20vw;
+    justify-self: center;
+    display: grid;
+    flex-direction: column;
+    justify-content: center;
+}
+form > label {
+    justify-self: center;
+    margin: 4px 0 -4px 0;
+}
+form > input {
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+form > button {
+    justify-self: center;
+    width: 7.5vw;
+    height: 10vh;
+    color: green;
+    font-weight: 700;
+    font-size: 22px;
+    background-color: greenyellow;
+    border: 2px solid green;
+    border-radius: 10px;
+    margin: 5px;
+}
+form > button:hover {
+    filter: invert(100%);
+    cursor: pointer;
+}
