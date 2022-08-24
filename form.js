@@ -98,8 +98,12 @@ const pwLoopCheck = () => {
             value = false;
         }
     }
+    if (pwconfInput.value.length !== pwInput.value.length) {
+        value = false;
+    }
     return value;
 };
+
 const showPwConfError = () => {
     if (pwconfInput.validity.valueMissing) {
         pwconfError.textContent = "Please confirm your password.";

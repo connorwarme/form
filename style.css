@@ -33,15 +33,15 @@ input:valid,
 input.valid {
     border-color: greenyellow;
 }
-input:invalid {
-    border-color: rgb(245, 19, 19);
-}
-input:focus:invalid {
+input:valid:focus,
+input.valid:focus {
     outline: none;
 }
+input:invalid,
 input.invalid {
     border-color: rgb(245, 19, 19);
 }
+input:focus:invalid,
 input.invalid:focus {
     outline: none;
 }
