@@ -3,6 +3,10 @@ console.log("working?");
 //
 const form = document.querySelector("form");
 // email
+// throws errors for:
+// - missing value (empty input field)
+// - wrong type (basically, needs @ included)
+// - minlength (min 8 characters)
 const emailInput = form.children[0].children[1];
 const emailError = emailInput.nextElementSibling;
 console.log(emailError);
@@ -25,6 +29,9 @@ emailInput.addEventListener("input", () => {
     }
 });
 // country
+// throws errors for:
+// - missing value (empty input field)
+// - minlength (min 3 characters)
 const countryInput = form.children[1].children[1];
 const countryError = countryInput.nextElementSibling;
 const showCountryError = () => {
@@ -44,8 +51,12 @@ countryInput.addEventListener("input", () => {
     }
 });
 // zip code
+// throws errors for:
+// - missing value (empty input field)
+// - doesn't match pattern (5 digit zip, or 5 + 4)
 const zipInput = form.children[2].children[1];
 const zipError = zipInput.nextElementSibling;
+// implemented regex as a pattern in the html
 const zipRegex = /^\d{5}(-\d{4})?$/;
 const showZipError = () => {
     if (zipInput.validity.valueMissing) {
@@ -64,6 +75,10 @@ zipInput.addEventListener("input", () => {
     }
 });
 // pw
+// throws errors for:
+// - missing value (empty input field)
+// - minlength (min 8 characters)
+// - failing strength test (needs 1 uppercase, 1 lowercase, 1 number, 1 symbol, minimum)
 const pwInput = form.children[3].children[1];
 const pwError = pwInput.nextElementSibling;
 const pwRegex =  /((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/;
@@ -73,6 +88,7 @@ const showPwError = () => {
     } else if (pwInput.validity.tooShort) {
         pwError.textContent = "Password must be as least 8 digits.";
     } else if (!pwRegex.test(pwInput.value)) {
+        // had to add a class, to get the styling to match the validity ":invalid" pseudoclass
         pwError.textContent = "Password needs at least: 1 UC, 1 lc, 1 #, 1 sym.";
         pwInput.classList.add("invalid");
     }
@@ -87,10 +103,14 @@ pwInput.addEventListener("input", () => {
         showPwError();
     }
 });
-// pw conf
+// password confirmation
+// throws errors for:
+// - missing value (empty input field)
+// - not matching pw.value
 const pwconfInput = form.children[4].children[1];
 const pwconfError = pwconfInput.nextElementSibling;
 const checkPw = (i) => pwconfInput.value[i] === pwInput.value[i];
+// loop through pwConf.value and see if it matches pw.value
 const pwLoopCheck = () => {
     let value = true;
     for (let i=0; i<pwconfInput.value.length; i +=1) {
