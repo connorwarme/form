@@ -29,6 +29,10 @@ form > label > input {
     border-radius: 5px;
     padding: 5px 10px;
 }
+input:valid,
+input.valid {
+    border-color: greenyellow;
+}
 input:invalid {
     border-color: rgb(245, 19, 19);
 }

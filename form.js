@@ -129,11 +129,25 @@ form.addEventListener("submit", (e) => {
         showCountryError();
         count += 1;
     }
+    if (!zipInput.validity.valid) {
+        showZipError();
+        count += 1;
+    }
+    if (!pwInput.validity.valid || !pwRegex.test(pwInput.value)) {
+        showPwError();
+        count += 1;
+    }
+    if (!pwconfInput.validity.valid || !pwLoopCheck()) {
+        showPwConfError();
+        count += 1;
+    }
     if (count > 0) {
         // i.e. if any of the inputs weren't valid, prevent submit
         e.preventDefault();
         // reset count value for next time
         count = 0;
+    } else {
+        console.log("high five, it worked!");
+        e.preventDefault();
     }
-
 });
