@@ -48,7 +48,6 @@ const zipInput = form.children[2].children[1];
 const zipError = zipInput.nextElementSibling;
 const zipRegex = /^\d{5}(-\d{4})?$/;
 const showZipError = () => {
-    console.log(zipRegex.test(zipInput.value));
     if (zipInput.validity.valueMissing) {
         zipError.textContent = "You need to enter your zipcode.";
     } else if (zipInput.validity.patternMismatch) {
@@ -65,8 +64,60 @@ zipInput.addEventListener("input", () => {
     }
 });
 // pw
-const pwInput = form.children[7];
-const pwconfInput = form.children[9];
+const pwInput = form.children[3].children[1];
+const pwError = pwInput.nextElementSibling;
+const pwRegex =  /((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/;
+const showPwError = () => {
+    if (pwInput.validity.valueMissing) {
+        pwError.textContent = "You must enter a password.";
+    } else if (pwInput.validity.tooShort) {
+        pwError.textContent = "Password must be as least 8 digits.";
+    } else if (!pwRegex.test(pwInput.value)) {
+        pwError.textContent = "Password needs at least: 1 UC, 1 lc, 1 #, 1 sym.";
+        pwInput.classList.add("invalid");
+    }
+    pwError.className = "error active";
+};
+pwInput.addEventListener("input", () => {
+    if (pwInput.validity.valid && pwRegex.test(pwInput.value)) {
+        pwError.textContent = "";
+        pwError.className = "error";
+        pwInput.className = "valid";
+    } else {
+        showPwError();
+    }
+});
+// pw conf
+const pwconfInput = form.children[4].children[1];
+const pwconfError = pwconfInput.nextElementSibling;
+const checkPw = (i) => pwconfInput.value[i] === pwInput.value[i];
+const pwLoopCheck = () => {
+    let value = true;
+    for (let i=0; i<pwconfInput.value.length; i +=1) {
+        if (checkPw(i) === false) {
+            value = false;
+        }
+    }
+    return value;
+};
+const showPwConfError = () => {
+    if (pwconfInput.validity.valueMissing) {
+        pwconfError.textContent = "Please confirm your password.";
+    } else if (!pwLoopCheck()) {
+        pwconfError.textContent = "Your passwords don't match!";
+        pwconfInput.classList.add("invalid");
+    }
+    pwconfError.className = "error active";
+};
+pwconfInput.addEventListener("input", () => {
+    if (pwconfInput.validity.valid && pwLoopCheck()) {
+        pwconfError.textContent = "";
+        pwconfError.className = "error";
+        pwconfInput.className = "valid";
+    } else {
+        showPwConfError();
+    }
+});
 //
 form.addEventListener("submit", (e) => {
     let count = 0;

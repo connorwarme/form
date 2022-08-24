@@ -26,10 +26,16 @@
                 <input type="text" id="zipcode" required pattern="^\d{5}(-\d{4})?$">
                 <span class="error" aria-live="polite"></span>
             </label>
-            <label for="pw">Password</label>
-            <input type="password" id="pw">
-            <label for="pwconf">Password Confirmation</label>
-            <input type="password" id="pwconf">
+            <label for="pw">
+                <span>Password:</span>
+                <input type="password" id="pw" required minlength="8">
+                <span class="error" aria-live="polite"></span>
+            </label>
+            <label for="pwconf">
+                <span>Password Confirmation</span>
+                <input type="password" id="pwconf">
+                <span class="error" aria-live="polite"></span>
+            </label>
             <button type="submit">Submit</button>
         </form>
     </div>
